@@ -13,8 +13,14 @@ class SLL:
         while cur:
             count += 1
             cur = cur.next
-
         return count
+
+    def empty(self):
+        if self.head == None:
+            return True
+        else:
+            return False
+
 
     def print(self):
         cur = self.head
@@ -45,6 +51,15 @@ class SLL:
         while cur.next:
             cur = cur.next
         cur.next = node
+
+    def pop_front(self):
+        return self.head.data
+    
+    def pop_back(self):
+        cur = self.head
+        while cur.next:
+            cur = cur.next
+        return cur.data
 
     def insert_after_value(self, value, data):
         node = Node(data)
@@ -131,6 +146,43 @@ class SLL:
         prev.next = cur.next
         cur = None
 
+    def swap(self, first, second):
+        prev_1 = None
+        key_1 = self.head
+        while key_1 and key_1.data != first:
+            prev_1 = key_1
+            key_1 = key_1.next
+
+        prev_2 = None
+        key_2 = self.head
+        while key_2 and key_2.data != second:
+            prev_2 = key_2
+            key_2 = key_2.next
+
+        if not key_1 and not key_2:
+            print("Error: Both keys do not exist in this list.")
+            return
+
+        if not key_1:
+            print("Error: Key_1 does not exist in this list.")
+            return
+
+        if not key_2:
+            print("Error: Key_2 does not exist in this list.")
+            return
+
+        if prev_1:
+            prev_1.next = key_2
+        else:
+            self.head = key_2
+
+        if prev_2:
+            prev_2.next = key_1
+        else:
+            self.head = key_1
+
+        key_1.next, key_2.next = key_2.next, key_1.next
+
 
     def reverse(self):
         prev = None
@@ -150,9 +202,9 @@ sl_list.append(1)
 sl_list.append(2)
 sl_list.append(3)
 sl_list.print()
-print("Old head was: " + str(sl_list.head.data))
-sl_list.reverse()
-sl_list.print()
-print("New head is: " + str(sl_list.head.data))
+print(sl_list.pop_front())
+print(sl_list.pop_back())
+# print("Old head was: " + str(sl_list.head.data))
+# print("New head is: " + str(sl_list.head.data))
 
 
