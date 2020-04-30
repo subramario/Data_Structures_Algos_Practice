@@ -187,21 +187,35 @@ class DLL:
         while cur_1 and cur_1.data != key_1:
             prev_1 = cur_1
             cur_1 = cur_1.next
-            after_1 = after_1.next
-
+            if after_1:
+                after_1 = after_1.next
+            else: 
+                after_1 = None
+            
         prev_2 = None
         cur_2 = self.head
         after_2 = self.head.next
         while cur_2 and cur_2.data != key_2:
             prev_2 = cur_2
             cur_2 = cur_2.next
-            after_2 = after_2.next
+            if after_2:
+                after_2 = after_2.next
+            else:
+                after_2 = None
+
+        if not cur_1:
+            print("Error: key_1 does not exist in this list.")
+
+        if not cur_2:
+                print("Error: key_2 does not exist in this list.")
+
+        if not cur_1 or not cur_2:
+            return
 
         if after_1:
             after_1.prev = cur_2
         else:
             pass
-
         if after_2:
             after_2.prev = cur_1
         else:
@@ -229,7 +243,7 @@ doubly.append(4)
 print("Before swap:")
 doubly.print()
 print("Head is: " + str(doubly.head.data))
-doubly.swap(1,4)
+doubly.swap(-1,40)
 print("After swap:")
 doubly.print()
 print("Head is: " + str(doubly.head.data))
