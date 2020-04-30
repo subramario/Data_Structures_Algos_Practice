@@ -9,10 +9,16 @@ class DLL:
         self.head = None
 
     def print(self):
+        if self.size() == 0:
+            print("List is empty.")
+            return 
+
         cur = self.head
         while cur:
             print(cur.data)
             cur = cur.next 
+
+        print("Head is: " + str(doubly.head.data))
 
     def size(self):
         cur = self.head
@@ -233,6 +239,26 @@ class DLL:
         cur_1.next, cur_2.next = cur_2.next, cur_1.next
         cur_1.prev, cur_2.prev = prev_2, prev_1
 
+    def reverse(self):
+        prev = None
+        cur = self.head
+
+        if self.size() == 0 or self.size == 1:
+            return
+
+        while cur: 
+            temp = cur.next 
+            cur.prev = temp
+            cur.next = prev
+            prev = cur
+            cur = temp
+
+        self.head = prev
+
+
+
+        
+
 
 doubly = DLL()
 
@@ -240,11 +266,11 @@ doubly.append(1)
 doubly.append(2)
 doubly.append(3)
 doubly.append(4)
-print("Before swap:")
+
+print("Before reversal:")
 doubly.print()
-print("Head is: " + str(doubly.head.data))
-doubly.swap(-1,40)
-print("After swap:")
+doubly.reverse()
+print("After reversal:")
 doubly.print()
-print("Head is: " + str(doubly.head.data))
+
 
