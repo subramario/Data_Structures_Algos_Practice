@@ -61,6 +61,19 @@ class SLL:
             cur = cur.next
         return cur.data
 
+    def value_at(self, position):
+        count = 0
+        cur = self.head
+
+        if position > self.size() or position < 0:
+            print("Error: Cannot locate the value of an indice that does not exist")
+            return
+
+        while cur and count != position:
+            count += 1
+            cur = cur.next
+        return cur.data
+
     def insert_after_value(self, value, data):
         node = Node(data)
 
@@ -202,8 +215,9 @@ sl_list.append(1)
 sl_list.append(2)
 sl_list.append(3)
 sl_list.print()
-print(sl_list.pop_front())
-print(sl_list.pop_back())
+# print(sl_list.pop_front())
+# print(sl_list.pop_back())
+print(sl_list.value_at(5))
 # print("Old head was: " + str(sl_list.head.data))
 # print("New head is: " + str(sl_list.head.data))
 
