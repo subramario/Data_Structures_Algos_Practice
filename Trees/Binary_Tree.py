@@ -44,6 +44,7 @@ class Binary_Tree:
     def __init__(self,root):
         self.root = Node(root)
 
+    # DEPTH FIRST SEARCH (DFS) METHODS!
     "root -> left subtree -> right subtree"
     def preorder_traversal(self, start):
         if start:
@@ -70,6 +71,7 @@ class Binary_Tree:
    
     def levelorder_traversal(self, start):
         """
+        BREADTH-FIRST-SEARCH (BFS)
         1) Enqueue root element 
         2) Use while loop on queue to repeat following procedure until queue is empty
         3) Peak element in queue and add to traversal
@@ -91,6 +93,7 @@ class Binary_Tree:
 
     def reverse_levelorder_traversal(self, start):
         """
+        REVERSE BREADTH-FIRST-SEARCH (RBFS)
         1) Enqueue root element 
         2) Use while loop on queue to repeat following procedure until queue is empty
         3) Dequeue element, access left and right children, then enqueue children (right then left)
