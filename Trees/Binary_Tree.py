@@ -125,6 +125,15 @@ class Binary_Tree:
         right_height = self.height(node.right)
         return 1 + max(left_height, right_height)
 
+    def size(self, node):
+        if node is None:
+            return 0
+
+        size_left = self.size(node.left)
+        size_right = self.size(node.right)
+        
+        return (size_left + size_right + 1)
+
 #               1
 #           /       \
 #          2          3
@@ -139,4 +148,4 @@ tree.root.left.right = Node(5)
 tree.root.right.left = Node(6)
 tree.root.right.right = Node(7) 
 
-print(tree.height(tree.root))
+print(tree.size(tree.root))
