@@ -77,6 +77,10 @@ class BST:
         self.inorder_traversal(start)
 
     def preorder_traversal(self,start):
+        if self.root is None:
+            print("Tree is empty.")
+            return
+
         if start:
             print(start.value)
             self.preorder_traversal(start.left)
@@ -86,6 +90,7 @@ class BST:
     def inorder_traversal(self, start):
         if self.root is None:
             print("Tree is empty.")
+            return
 
         if start:
             self.inorder_traversal(start.left)
@@ -94,6 +99,10 @@ class BST:
             return
         
     def postorder_traversal(self, start):
+        if self.root is None:
+            print("Tree is empty.")
+            return
+
         if start:
             self.postorder_traversal(start.left)
             self.postorder_traversal(start.right)
@@ -119,18 +128,26 @@ class BST:
             return
 
     def delete_value(self, value, start):
+        """
+        BREADTH-FIRST-SEARCH (BFS)
+        1) Enqueue root element 
+        2) Use while loop on queue to repeat following procedure until queue is empty
+        3) Peak element in queue and add to traversal
+        4) Dequeue element, access left and right children, then enqueue children (left then right)
+        5) Repeat
+        """
+        queue = Queue()
         if start is None:
-            print("Value not found in this list - cannot delete.")
             return
 
-        if value > start.value:
-            self.delete_value(value, start.right)
-
-        if value < start.value:
-            self.delete_value(value, start.left)
-
-        if value == start.value:
-            start.value = None
+        queue.enqueue(start)
+        while not queue.empty():
+            print(queue.peak())
+            parent = queue.dequeue()
+            if parent.left:
+                queue.enqueue(parent.left)
+            if parent.right:
+                queue.enqueue(parent.right)
 
     def delete_tree(self, start):
         """
@@ -186,4 +203,5 @@ tree.insert(6, tree.root)
 tree.insert(9, tree.root)
 tree.insert(11, tree.root)
 
-tree.inorder_traversal(tree.root)
+tree.delete_tree(tree.root)
+tree.find(10, tree.root)
