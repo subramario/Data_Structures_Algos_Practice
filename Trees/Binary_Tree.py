@@ -151,4 +151,4 @@ tree.root.left.right = Node(5)
 tree.root.right.left = Node(6)
 tree.root.right.right = Node(7) 
 
-print(tree.size(tree.root))
+tree.reverse_levelorder_traversal(tree.root)
