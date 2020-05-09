@@ -40,8 +40,8 @@ class Stack:
             return False
 
 class BST:
-    def __init__(self, root):
-        self.root = Node(root)
+    def __init__(self):
+        self.root = None
 
     def get_min(self,start):
         if start.left is None:
@@ -56,6 +56,27 @@ class BST:
             return
         else:
             self.get_max(start.right)
+
+    def get_parent(self, value, start):
+        if value == start.value:
+            return False
+
+        prev = None
+        cur = start
+
+        while cur and cur.value != value:
+            prev = cur
+
+            if value < start.value:
+                cur = cur.left
+                
+            if value > start.value:
+                cur = cur.right
+            
+        if cur is None:
+            return False
+        else:
+            return prev.value
 
     def size(self, start):
         if start is None:
@@ -109,7 +130,45 @@ class BST:
             print(start.value)
             return
 
+    def breadth_first_search(self, start):
+        if start is None:
+            return
+
+        queue = Queue()
+
+        queue.enqueue(start)
+        while not queue.empty():
+            print(queue.peak())
+            parent = queue.dequeue()
+            if parent.left:
+                queue.enqueue(parent.left)
+            if parent.right:
+                queue.enqueue(parent.right)
+
+    def reverse_bfs(self, start):
+        if start is None:
+            return
+
+        queue = Queue()
+        stack = Stack()
+
+        queue.enqueue(start)
+        while not queue.empty():
+            parent = queue.dequeue()
+            if parent.right:
+                queue.enqueue(parent.right)
+            if parent.left:
+                queue.enqueue(parent.left)
+            stack.push(parent)
+        
+        while not stack.empty():
+            print(stack.pop().value)
+
     def insert(self, value, start):
+        if self.root is None:
+            self.root = Node(value)
+            return
+
         if value < start.value:
             if start.left is None:
                 start.left = Node(value)
@@ -128,35 +187,33 @@ class BST:
             return
 
     def delete_value(self, value, start):
-        """
-        BREADTH-FIRST-SEARCH (BFS)
-        1) Enqueue root element 
-        2) Use while loop on queue to repeat following procedure until queue is empty
-        3) Peak element in queue and add to traversal
-        4) Dequeue element, access left and right children, then enqueue children (left then right)
-        5) Repeat
-        """
-        queue = Queue()
+
         if start is None:
+            print("The tree is empty.")
             return
 
-        queue.enqueue(start)
-        while not queue.empty():
-            print(queue.peak())
-            parent = queue.dequeue()
-            if parent.left:
-                queue.enqueue(parent.left)
-            if parent.right:
-                queue.enqueue(parent.right)
+        if value < start.value:
+            self.delete_value(value, start.left)
+            return
+        
+        if value > start.value:
+            self.delete_value(value, start.right)
+            return
+        
+        else:
+            
+            if start.left is None and start.right is None:
+                start = None
+                return
 
     def delete_tree(self, start):
         """
-        REVERSE BREADTH-FIRST-SEARCH (RBFS)
+        REVERSE BFS APPROACH:
         1) Enqueue root element 
         2) Use while loop on queue to repeat following procedure until queue is empty
-        3) Dequeue element, access left and right children, then enqueue children (right then left)
+        3) Dequeue element, access children, then enqueue existing children (right then left)
         4) Add parent node to stack
-        5) Once queue is empty, pop off the stack to produce traversal
+        5) Once queue is empty, pop off the stack, set both pointers to None as well as parent node to None
         """
         queue = Queue()
         stack = Stack()
@@ -175,9 +232,7 @@ class BST:
             node.left = None
             node.right = None
             node = None
-
         self.root = None
-        
         
     def find(self, value, start):
         if start is None:
@@ -186,7 +241,7 @@ class BST:
 
         if start.value == value:
             print(str(value) + " is in this tree.")
-            return True
+            return start
         
         if value > start.value:
             self.find(value, start.right)
@@ -195,13 +250,19 @@ class BST:
             self.find(value, start.left)
 
 
-tree = BST(8)
+tree = BST()
+tree.insert(8, tree.root)
 tree.insert(3, tree.root)
 tree.insert(10, tree.root)
 tree.insert(1, tree.root)
 tree.insert(6, tree.root)
 tree.insert(9, tree.root)
 tree.insert(11, tree.root)
+print(tree.get_parent(19, tree.root))
+# print("Before deletion:")
+# tree.inorder_traversal(tree.root)
+# tree.delete_value(11, tree.root)
+# print("After deletion:")
+# tree.inorder_traversal(tree.root)
+# tree.find(11, tree.root)
 
-tree.delete_tree(tree.root)
-tree.find(10, tree.root)
