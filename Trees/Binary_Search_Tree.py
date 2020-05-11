@@ -186,25 +186,56 @@ class BST:
             print("Value already added to binary search tree.")
             return
 
-    def delete_value(self, value, start):
+    def delete_value(self, value, start, parent = None):
 
         if start is None:
             print("The tree is empty.")
             return
 
         if value < start.value:
-            self.delete_value(value, start.left)
+            self.delete_value(value, start.left, start)
             return
         
         if value > start.value:
-            self.delete_value(value, start.right)
+            self.delete_value(value, start.right, start)
             return
         
         else:
-            
+            # If node to be deleted has no children (ie. leaf node)
             if start.left is None and start.right is None:
+                if parent.left == start:
+                    parent.left = None
+                if parent.right == start:
+                    parent.right = None
                 start = None
                 return
+                
+            # If node has one child
+            if start.left is None or start.right is None:
+                if parent.left == start:
+                    parent.left = start.left
+                if parent.right == start:
+                    parent.right = start.right
+                start = None
+                return
+
+            # If node has two children
+            if start.left and start.right:
+                # Find inorder successor - traverse as far left as possible for right child's subtree until leaf node is reached
+                temp = start.right
+                while temp.left:
+                    temp = temp.left
+                # Variable to temporarily store leaf node value
+                change = temp.value
+
+                # Delete leaf node 
+                self.delete_value(temp.value, self.root)
+
+                # Change original nodes value 
+                start.value = change
+                return
+
+
 
     def delete_tree(self, start):
         """
@@ -249,7 +280,13 @@ class BST:
         if value < start.value:
             self.find(value, start.left)
 
-
+#               8
+#           /       \
+#          3          10
+#         /  \      /   \
+#        1    6     9    12
+#                       /   \
+#                      (11)   14
 tree = BST()
 tree.insert(8, tree.root)
 tree.insert(3, tree.root)
@@ -258,11 +295,13 @@ tree.insert(1, tree.root)
 tree.insert(6, tree.root)
 tree.insert(9, tree.root)
 tree.insert(11, tree.root)
-print(tree.get_parent(19, tree.root))
-# print("Before deletion:")
-# tree.inorder_traversal(tree.root)
-# tree.delete_value(11, tree.root)
-# print("After deletion:")
-# tree.inorder_traversal(tree.root)
-# tree.find(11, tree.root)
+tree.insert(12, tree.root)
+tree.insert(14, tree.root)
+# print(tree.get_parent(11, tree.root))
+print("Before deletion:")
+tree.inorder_traversal(tree.root)
+tree.delete_value(10, tree.root)
+print("After deletion:")
+tree.inorder_traversal(tree.root)
+tree.find(10, tree.root)
 
