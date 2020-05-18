@@ -235,8 +235,6 @@ class BST:
                 start.value = change
                 return
 
-
-
     def delete_tree(self, start):
         """
         REVERSE BFS APPROACH:
@@ -294,9 +292,9 @@ tree.insert(10, tree.root)
 tree.insert(1, tree.root)
 tree.insert(6, tree.root)
 tree.insert(9, tree.root)
-tree.insert(11, tree.root)
+# tree.insert(11, tree.root)
 tree.insert(12, tree.root)
-tree.insert(14, tree.root)
+# tree.insert(14, tree.root)
 # print(tree.get_parent(11, tree.root))
 print("Before deletion:")
 tree.inorder_traversal(tree.root)
