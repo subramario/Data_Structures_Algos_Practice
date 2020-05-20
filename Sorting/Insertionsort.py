@@ -9,6 +9,7 @@ class Solution:
             """
             While the preceeding array value is greater than current value, copy preceeding value to current value, iterate backward and assess again.
             Continue this process until iterator reaches beginning of list, or prior element is < current 
+            Note: must always check if index is valid before checking the value, or you might compare array[-1] when iterator reaches array[0]
             """
             while currentPosition > 0 and array[currentPosition - 1] > currentValue:
                 array[currentPosition] = array[currentPosition - 1]
